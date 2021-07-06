@@ -23,18 +23,20 @@ class ResultIINSerilizer(serializers.ModelSerializer):
         iina = getattr(geta, "iin")
         if int(iina[0:2])>=21:
             if int(iina[2:4])>= month:
-                if int(iina[4:6])>= day:
-                    return year - (+int(iina[0:2]))
+                if int(iina[4:6])> day:
+                    return year - (1900+int(iina[0:2])) - 1 
                 else:
-                    return year - (1898+int(iina[0:2]))
+                    return year - (1900+int(iina[0:2])) 
             else:
-                return year - (1899+int(iina[0:2]))
+                return year - (1900+int(iina[0:2])) - 1 
         else:
             if int(iina[2:4])>= month:
-                return year - (2000+int(iina[0:2]))
+                if int(iina[4:6])> day:
+                    return year - (2000+int(iina[0:2])) - 1 
+                else:
+                    return year - (2000+int(iina[0:2])) 
             else:
-                return year - (1999+int(iina[0:2]))
-
+                return year - (2000+int(iina[0:2])) - 1 
 
     class Meta:
         model = Person
