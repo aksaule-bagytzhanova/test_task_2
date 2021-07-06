@@ -13,11 +13,28 @@ class PersonINNSerilizer(serializers.ModelSerializer):
 class ResultIINSerilizer(serializers.ModelSerializer):
     age = serializers.SerializerMethodField('get_age')
     today = date.today()
-    
+    global year 
+    global month
+    global day
+    year = today.year
+    month = today.month
+    day = today.day
     def get_age(self, geta):
         iina = getattr(geta, "iin")
-        if iina
-        return int(iina)
+        if int(iina[0:2])>=21:
+            if int(iina[2:4])>= month:
+                if int(iina[4:6])>= day:
+                    return year - (+int(iina[0:2]))
+                else:
+                    return year - (1898+int(iina[0:2]))
+            else:
+                return year - (1899+int(iina[0:2]))
+        else:
+            if int(iina[2:4])>= month:
+                return year - (2000+int(iina[0:2]))
+            else:
+                return year - (1999+int(iina[0:2]))
+
 
     class Meta:
         model = Person
